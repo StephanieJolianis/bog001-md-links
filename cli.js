@@ -1,5 +1,5 @@
 const { argv } = require('yargs');
-const project = require("./src/mdLinks.js");
+const project = require("./mdLinks.js");
 
 if (argv._[0]) {
     const objArgv = {
