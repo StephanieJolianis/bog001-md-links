@@ -1,7 +1,8 @@
 {
-    "name": "jolianis-mdlinks",
-    "version": "1.0.0",
+    "name": "sj-mdlinks",
+    "version": "1.0.6",
     "description": "Validator of links contained only in md files",
+    "main": "mdLinks.js",
     "license": "MIT",
     "repository": "https://github.com/StephanieJolianis/bog001-md-links",
     "author": {
@@ -13,7 +14,12 @@
         "marked": "^1.2.0",
         "yargs": "^16.0.3"
     },
-    "bin": "cli.js",
+    "bin": {
+        "mdlinks": "./cli.js"
+    },
+    "scripts": {
+        "test": "jest --verbose --coverage"
+    },
     "engines": {
         "node": ">=0.10.0"
     },
@@ -29,6 +35,12 @@
         "mdlinks",
         "markdown",
         "validate",
-        "links"
-    ]
+        "links",
+        "javascript",
+        "npm"
+    ],
+    "devDependencies": {
+        "jest": "^26.5.3"
+    }
+
 }
