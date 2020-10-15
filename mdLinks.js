@@ -1,3 +1,4 @@
+const { option } = require("yargs");
 const reading = require("./reader.js");
 const validate = require("./validate.js");
 
@@ -5,9 +6,24 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
     return readerDirectory(path)
         .then(array => {
             if (options.validate == true) {
-                array = validate.validateLink(array);
+                array = validate.validateLink(array).then(arrValidate => {
+                    if (options.stats == true) {
+                        let statsLinks = [];
+                        statsLinks.total = arrValidate.length;
+                        statsLinks.unique = 0;
+                        for (i = 0; i < arrValidate.length; i++) {
+                            const result = arrValidate.filter(link => link.href == arrValidate[i].href).length;
+                            if (result == 1)
+                                statsLinks.unique++;
+                        }
+                        statsLinks.broken = arrValidate.filter(link => link.status == "FAIL").length;
+                        statsLinks.ok = arrValidate.filter(link => link.status == "OK").length;
+                        arrValidate = statsLinks;
+                    }
+                    return arrValidate;
+                });
             }
-            if (options.stats == true) {
+            if (options.stats == true && options.validate == false) {
                 let statsLinks = [];
                 statsLinks.total = array.length;
                 statsLinks.unique = 0;
@@ -16,12 +32,9 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
                     if (result == 1)
                         statsLinks.unique++;
                 }
-                if (options.validate == true) {
-                    statsLinks.broken = array.filter(link => link.status == "fail").length;
-                    statsLinks.ok = array.filter(link => link.status == "ok").length;
-                }
                 array = statsLinks;
             }
+
             resolve(array);
         })
         .catch(err => {

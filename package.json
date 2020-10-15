@@ -1,6 +1,6 @@
 {
     "name": "sj-mdlinks",
-    "version": "1.0.6",
+    "version": "1.1.0",
     "description": "Validator of links contained only in md files",
     "main": "mdLinks.js",
     "license": "MIT",
@@ -12,6 +12,7 @@
     "dependencies": {
         "jsdom": "^16.4.0",
         "marked": "^1.2.0",
+        "node-fetch": "^2.6.1",
         "yargs": "^16.0.3"
     },
     "bin": {
@@ -42,5 +43,4 @@
     "devDependencies": {
         "jest": "^26.5.3"
     }
-
 }

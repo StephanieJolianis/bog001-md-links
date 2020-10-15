@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const chalk = require('chalk');
 const { argv } = require('yargs');
 const project = require("./mdLinks.js");
 
@@ -23,10 +24,10 @@ const mdlinksFunction = (argv) => {
                 console.log(response);
             })
             .catch(error => {
-                console.error(error);
+                console.error(chalk.red(error));
             })
     } else {
-        console.error("Error: Se requiere ruta de archivo.");
+        console.error(chalk.bold.red("Error: Se requiere ruta de archivo."));
     }
 }
 

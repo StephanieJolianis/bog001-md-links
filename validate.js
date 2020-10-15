@@ -1,4 +1,6 @@
-const http = require("https");
+//const { promises } = require("fs");
+//const http = require("https");
+const fetch = require("node-fetch");
 
 const validateLink = (array) => {
     let arrayValidate = [];
@@ -8,17 +10,36 @@ const validateLink = (array) => {
             text: array[i].text,
             file: array[i].file,
             code: 200,
-            status: "ok",
+            status: "OK",
         }
-        http.get(array[i].href, res => {
-            if (res.statusCode != 200) {
-                objValidate.code = res.statusCode;
-                objValidate.status = "fail";
-            }
-        });
+        objValidate = responseLink(objValidate);
         arrayValidate.push(objValidate);
     }
-    return arrayValidate;
+    return Promise.all(arrayValidate).then(values => {
+        let arrayResponse = [];
+        for (let responsePromise of values) {
+            arrayResponse = arrayResponse.concat(responsePromise);
+        }
+        return arrayResponse;
+    }).catch(err => {
+        return err;
+    });
+
+
+
+    //return arrayValidate;
 }
 
+const responseLink = link => {
+    return fetch(link)
+        .then(res => {
+            link.code = res.status;
+            link.status = res.statusText;
+            return link;
+        }).catch(res => {
+            link.code = 404;
+            link.status = "FAIL";
+            return link;
+        });
+}
 exports.validateLink = validateLink;

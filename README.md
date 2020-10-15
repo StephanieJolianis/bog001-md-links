@@ -1,20 +1,159 @@
 # Markdown Links
-<p align="center"> <img src="img/mdlinks.png" width="1000"></p>
+<div align="center"> <img src="https://raw.githubusercontent.com/StephanieJolianis/bog001-md-links/mdLinks/img/links.png"></div>
 
+**Índice**
+- [Descripción](#id1)
+- [Homepage](#id2)
+- [Diagrama de flujo](#id3)
+- [Instalación y uso (CLI)](#id4)
+  - [Ejecución de comandos](#id6)
+- [Instalación y uso (MÓDULO)](#id5)
+- [Objetivos de aprendizaje](#id7)
+- [Checklist](#id8)
+
+## Descripción<div id='id1'/>
 sj-mdlinks es una libreria que usa [Node.js](https://nodejs.org/) Contiene una función  `recursiva` que recibe como parámetro una ruta, localiza todos los archivos con extensión .md que esten dentro de la ruta proporcionada (incluyendo subdirectorios), verifica los links que contenga cada archivo, valida su status (ok, fail) y calcula estadisticas básicas sobre los links (totales, únicos y rotos).
 ***
 
-## Diagrama de flujo
+## Homepage<div id='id2'/>
+[Github StephanieJolianis](https://github.com/StephanieJolianis/bog001-md-links/tree/master)
+***
+
+## Diagrama de flujo<div id='id3'/>
 <p align="center"> <img src="img/diagrama.png" width="1000"></p>
 
 
+***
+## Instalación y uso (CLI)<div id='id4'/>
 
-## Instalación CLI
+Linux o MacOS
 ```sh
-npm i -g  sj-mdlinks
+$ sudo npm i -g sj-mdlinks
 ```
 
-## 3. Objetivos de aprendizaje
+Microsoft Windows
+```sh
+$ npm i -g  sj-mdlinks
+```
+***
+### Ejecución de comandos:<div id='id6'/>
+
+Puedes ejecutar la aplicación de la siguiente manera a través de la terminal
+md-links <path-to-file> [options]
+
+##### Por ejemplo: 
+
+- Para obtener links
+
+Aquí puedes utilizar una ruta de un archivo con una extensión .md o una ruta de un directorio.
+
+`Comando:`
+```sh
+$ mdlinks hola.md
+```
+`Retorno:` 
+```sh
+[ { file: '/home/stephanie/Escritorio/pruebas-mdlinks/hola.md',
+    href: 'https://www.npmjs.com/package/sj-mdlinks',
+    text: 'Stephanie' },
+  { file: '/home/stephanie/Escritorio/pruebas-mdlinks/hola.md',
+    href: 'https://otra-cosa.net/algun-doc.html',
+    text: 'Link roto' } ]
+```
+
+- Options
+
+##### `--validate`
+
+Si pasas la opción `--validate`, el módulo hace una petición HTTP para averiguar si el link funciona o no. Si el link resulta en una redirección a una URL que responde ok, entonces se considera el link como ok.
+
+`Comando:`
+```sh
+$ mdlinks hola.md --validate
+```
+`Retorno:` 
+```sh
+[ { href: 'https://www.npmjs.com/package/sj-mdlinks',
+    text: 'Stephanie',
+    file: '/home/stephanie/Escritorio/pruebas-mdlinks/hola.md',
+    code: 200,
+    status: 'OK' },
+  { href: 'https://otra-cosa.net/algun-doc.html',
+    text: 'Link roto',
+    file: '/home/stephanie/Escritorio/pruebas-mdlinks/hola.md',
+    code: 404,
+    status: 'FAIL' } ]
+```
+
+
+##### `--stats`
+Si pasas la opción --stats el output será un texto con estadísticas básicas sobre los links.
+
+`Comando:` 
+```sh
+$ mdlinks hola.md --stats
+```
+`Retorno:`
+
+```sh
+[ total: 2, unique: 2 ]
+```
+
+También puedes combinar --stats y --validate para obtener estadísticas que necesites de los resultados de la validación.
+
+`Comando:` 
+```sh
+$ mdlinks hola.md --validate --stats
+```
+`Retorno:`
+
+```sh
+[ total: 2, unique: 2, broken: 1, ok: 1 ]
+```
+***
+## Instalación y uso (MÓDULO)<div id='id5' />
+Instalar como dependencia npm
+```sh
+$ npm i sj-mdlinks
+```
+
+#### Ejemplo uso del módulo
+
+```js
+
+const mdlinks = require("sj-mdlinks");
+
+//obtener datos de un archivo .md [{ href, text, file }]
+mdlinks("./some/example.md", { validate: false, stats: false})
+  .then(links => {
+    console.log(links)
+  })
+  .catch(console.error);
+
+//Obtener links validados [{ href, text, file, status, ok }]
+mdlinks("./some/example.md", { validate: true, stats: false })
+  .then(links => {
+    console.log(links)
+  })
+  .catch(console.error);
+
+//Obtener estadísticas [{ total, unique }]
+mdlinks("./some/example.md", { validate: false, stats: true })
+  .then(links => {
+    console.log(links)
+  })
+  .catch(console.error);
+
+//Obtener estadísticas y validación de links [{ total, unique, broken, ok }]
+mdlinks("./some/example.md", { validate: true, stats: true })
+  .then(links => {
+    console.log(links)
+  })
+  .catch(console.error);
+
+```
+
+## Objetivos de aprendizaje<div id='id7'/>
 
 ### JavaScript
 
@@ -68,132 +207,11 @@ npm i -g  sj-mdlinks
 
 * [ ] [Recursión.](https://www.youtube.com/watch?v=lPPgY3HLlhQ)
 
-***
-
-
-
-### JavaScript API: interfaz
-
-#### `mdLinks(path, options)`
-
-##### Argumentos
-
-* `path`: Ruta absoluta o relativa al archivo o directorio. Si la ruta pasada es
-  relativa, debe resolverse como relativa al directorio desde donde se invoca
-  node - _current working directory_).
-* `options`: Un objeto con las siguientes propiedades:
-  - `validate`: Booleano que determina si se desea validar los links
-    encontrados.
-
-##### Valor de retorno
-
-La función debe retornar una promesa (`Promise`) que resuelva a un arreglo
-(`Array`) de objetos (`Object`), donde cada objeto representa un link y contiene
-las siguientes propiedades:
-
-* `href`: URL encontrada.
-* `text`: Texto que aparecía dentro del link (`<a>`).
-* `file`: Ruta del archivo donde se encontró el link.
-
-#### Ejemplo
-
-```js
-const mdLinks = require("md-links");
-
-mdLinks("./some/example.md")
-  .then(links => {
-    // => [{ href, text, file }]
-  })
-  .catch(console.error);
-
-mdLinks("./some/example.md", { validate: true })
-  .then(links => {
-    // => [{ href, text, file, status, ok }]
-  })
-  .catch(console.error);
-
-mdLinks("./some/dir")
-  .then(links => {
-    // => [{ href, text, file }]
-  })
-  .catch(console.error);
-```
-
-### CLI (Command Line Interface - Interfaz de Línea de Comando)
-
-El ejecutable de nuestra aplicación debe poder ejecutarse de la siguiente
-manera a través de la terminal:
-
-`md-links <path-to-file> [options]`
-
-Por ejemplo:
-
-```sh
-$ md-links ./some/example.md
-./some/example.md http://algo.com/2/3/ Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html algún doc
-./some/example.md http://google.com/ Google
-```
-
-El comportamiento por defecto no debe validar si las URLs responden ok o no,
-solo debe identificar el archivo markdown (a partir de la ruta que recibe como
-argumento), analizar el archivo Markdown e imprimir los links que vaya
-encontrando, junto con la ruta del archivo donde aparece y el texto
-que hay dentro del link (truncado a 50 caracteres).
-
-#### Options
-
-##### `--validate`
-
-Si pasamos la opción `--validate`, el módulo debe hacer una petición HTTP para
-averiguar si el link funciona o no. Si el link resulta en una redirección a una
-URL que responde ok, entonces consideraremos el link como ok.
-
-Por ejemplo:
-
-```sh
-$ md-links ./some/example.md --validate
-./some/example.md http://algo.com/2/3/ ok 200 Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html fail 404 algún doc
-./some/example.md http://google.com/ ok 301 Google
-```
-
-Vemos que el _output_ en este caso incluye la palabra `ok` o `fail` después de
-la URL, así como el status de la respuesta recibida a la petición HTTP a dicha
-URL.
-
-##### `--stats`
-
-Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas
-básicas sobre los links.
-
-```sh
-$ md-links ./some/example.md --stats
-Total: 3
-Unique: 3
-```
-
-También podemos combinar `--stats` y `--validate` para obtener estadísticas que
-necesiten de los resultados de la validación.
-
-```sh
-$ md-links ./some/example.md --stats --validate
-Total: 3
-Unique: 3
-Broken: 1
-```
-
-## 6. Entregables
-
-Módulo instalable via `npm install <github-user>/md-links`. Este módulo debe
-incluir tanto un ejecutable como una interfaz que podamos importar con `require`
-para usarlo programáticamente.
-
 
 ***
 
 
-## Checklist
+## Checklist<div id='id8'/>
 
 ### General
 
