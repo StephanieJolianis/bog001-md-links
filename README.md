@@ -20,7 +20,7 @@ sj-mdlinks es una libreria que usa [Node.js](https://nodejs.org/) Contiene una f
 ***
 
 ## Diagrama de flujo<div id='id3'/>
-<p align="center"> <img src="img/diagrama.png" width="1000"></p>
+<p align="center"> <img src="https://raw.githubusercontent.com/StephanieJolianis/bog001-md-links/mdLinks/img/diagrama.png" width="1000"></p>
 
 
 ***
