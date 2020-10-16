@@ -1,5 +1,3 @@
-//const { promises } = require("fs");
-//const http = require("https");
 const fetch = require("node-fetch");
 
 const validateLink = (array) => {
@@ -24,10 +22,6 @@ const validateLink = (array) => {
     }).catch(err => {
         return err;
     });
-
-
-
-    //return arrayValidate;
 }
 
 const responseLink = link => {

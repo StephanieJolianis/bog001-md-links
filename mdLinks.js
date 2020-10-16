@@ -1,4 +1,3 @@
-const { option } = require("yargs");
 const reading = require("./reader.js");
 const validate = require("./validate.js");
 
@@ -57,16 +56,5 @@ const readerDirectory = (path) => {
             return err;
         })
 }
-
-
-
-
-// mdLinks("./test/", { validate: true, stats: true }) // ejecución de la función
-//     .then(cualquiercosa => {
-//         console.log("Respuesta", cualquiercosa);
-//     })
-//     .catch(cualquiercosa => {
-//         console.error(cualquiercosa);
-//     })
 
 exports.mdLinks = mdLinks;

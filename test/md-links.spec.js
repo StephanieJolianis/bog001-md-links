@@ -8,28 +8,28 @@ const tobeSecondTest = [{
         text: 'Node.js',
         file: '/home/stephanie/Documentos/proyectos laboratoria/bog001-md-links/test/directory1/prueba1.md',
         code: 200,
-        status: 'ok'
+        status: 'OK'
     },
     {
         href: 'https://nodejs.org/es/',
         text: 'Node.js',
         file: '/home/stephanie/Documentos/proyectos laboratoria/bog001-md-links/test/directory1/prueba1.md',
         code: 200,
-        status: 'ok'
+        status: 'OK'
     },
     {
         href: 'https://nodejs.org/es/',
         text: 'Node.js',
         file: '/home/stephanie/Documentos/proyectos laboratoria/bog001-md-links/test/directory1/prueba1.md',
         code: 200,
-        status: 'ok'
+        status: 'OK'
     },
     {
         href: 'https://es.wikipedia.org/wiki/Markdown',
         text: 'Markdown',
         file: '/home/stephanie/Documentos/proyectos laboratoria/bog001-md-links/test/hola.md',
         code: 200,
-        status: 'ok'
+        status: 'OK'
     }
 ];
 

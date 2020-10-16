@@ -2,7 +2,6 @@ const fs = require("fs").promises;
 const mdPath = require("path");
 const mdToHtml = require("./mdToHtml.js");
 
-
 const readingDirectory = (path) => {
     return fs.stat(path)
         .then(stats => {
