@@ -33,7 +33,7 @@ $ sudo npm i -g sj-mdlinks
 
 Microsoft Windows
 ```sh
-$ npm i -g  sj-mdlinks
+$ npm i -g sj-mdlinks
 ```
 ***
 ### Ejecución de comandos:<div id='id6'/>
@@ -239,6 +239,6 @@ mdlinks("./some/example.md", { validate: true, stats: true })
 
 ### Pruebas / tests
 
-* [ ] Pruebas unitarias cubren un mínimo del 70% de statements, functions,
+* [x] Pruebas unitarias cubren un mínimo del 70% de statements, functions,
   lines, y branches.
-* [ ] Pasa tests (y linters) (`npm test`).
+* [x] Pasa tests (y linters) (`npm test`).
