@@ -172,7 +172,7 @@ mdlinks("./some/example.md", { validate: true, stats: true })
 ### Node
 
 * [x] Uso de sistema de archivos. ([fs](https://nodejs.org/api/fs.html), [path](https://nodejs.org/api/path.html))
-* [ ] Instalar y usar módulos. ([npm](https://www.npmjs.com/))
+* [x] Instalar y usar módulos. ([npm](https://www.npmjs.com/))
 * [x] Creación de modules. [(CommonJS)](https://nodejs.org/docs/latest-v0.10.x/api/modules.html)
 * [x] [Configuración de package.json.](https://docs.npmjs.com/files/package.json)
 * [x] [Configuración de npm-scripts](https://docs.npmjs.com/misc/scripts)
